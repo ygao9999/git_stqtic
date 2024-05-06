@@ -10,7 +10,7 @@ COPY --from=readline /output /output
 COPY --from=zlib /output /output
 
 WORKDIR /build
-RUN download http://www.dest-unreach.org/socat/download/socat-1.7.4.1.tar.gz source.tar.gz 0c7e635070af1b9037fd96869fc45eacf9845cb54547681de9d885044538736d && tar xf source.tar.gz
+RUN download http://www.dest-unreach.org/socat/download/socat-1.8.0.0.tar.gz source.tar.gz 6010f4f311e5ebe0e63c77f78613d264253680006ac8979f52b0711a9a231e82 && tar xf source.tar.gz
 RUN export PATH=/build/cross/bin:$PATH && \
 cd socat-* && \
 CC="${MUSL_TARGET}-gcc" \
