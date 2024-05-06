@@ -6,7 +6,7 @@ ADD ./download /usr/local/bin
 
 RUN mkdir /output && \
 export DEBIAN_FRONTEND=noninteractive && \
-sed -e 's/http:\/\/[^/]*/http:\/\/deb.debian.org/g' -i /etc/apt/sources.list && \
+sed -e 's#http://[^/]*#http://deb.debian.org#g' -i /etc/apt/sources.list && \
 apt-get --option=Dpkg::Options::=--force-unsafe-io update && \
 apt-get --option=Dpkg::Options::=--force-confold --option=Dpkg::Options::=--force-unsafe-io -y dist-upgrade && \
 apt-get --option=Dpkg::Options::=--force-unsafe-io -y autoremove && \
