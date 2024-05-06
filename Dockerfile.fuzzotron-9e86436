@@ -8,7 +8,7 @@ COPY --from=openssl /output /output
 COPY --from=pcre /output /output
 
 WORKDIR /build
-RUN download https://github.com/denandz/fuzzotron/archive/09b70461f6bcefac47ca9d43612209e68a7450aa.tar.gz source.tar.gz e994aef759e4091e85bcb41071be62c65e295647bca87e2de7d9b7a6dce700ac && tar xf source.tar.gz
+RUN download https://github.com/denandz/fuzzotron/archive/9e86436021a4adf344215c21892eee390a1d0469.tar.gz source.tar.gz 7b93c47c2382a9c6bc64a0d948b2c7bc9bef18556321fd0eeff041b45130733a && tar xf source.tar.gz
 RUN export PATH=/build/cross/bin:$PATH && \
 cd fuzzotron-* && \
 sed -e 's/^LIBS = .*/LIBS = -lpcre -lssl -lcrypto -lpthread/' -i Makefile && \
