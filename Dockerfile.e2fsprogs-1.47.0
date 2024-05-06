@@ -3,9 +3,10 @@ FROM musl-cross-make-$MUSL_TARGET
 ARG MUSL_TARGET
 
 WORKDIR /build
-RUN download https://mirrors.edge.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v1.46.5/e2fsprogs-1.46.5.tar.gz source.tar.gz 0786fadd77421e04b21f3a79513c5d8d9232f82eb8bea68f3af46f2d98bdd889 && tar xf source.tar.gz
+RUN download https://mirrors.edge.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v1.47.0/e2fsprogs-1.47.0.tar.gz source.tar.gz 0b4fe723d779b0927fb83c9ae709bc7b40f66d7df36433bef143e41c54257084 && tar xf source.tar.gz
 RUN export PATH=/build/cross/bin:$PATH && \
 cd e2fsprogs-* && \
+sed -e '/fallocate64/d' -i configure.ac && \
 mkdir build && \
 cd build && \
 export CC="$MUSL_TARGET-gcc" && \

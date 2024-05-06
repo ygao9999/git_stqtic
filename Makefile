@@ -38,7 +38,7 @@ protobuf-3.21.1: musl-cross-make
 expat-2.4.1: musl-cross-make
 	$(DOCKER_BUILD)
 
-e2fsprogs-1.46.5: musl-cross-make
+e2fsprogs-1.47.0: musl-cross-make
 	$(DOCKER_BUILD)
 
 # Produces both libcurl and the curl binary.
@@ -119,7 +119,7 @@ openssh-8.8p1: openssl-1.1.1k zlib-1.3.1
 	$(GRABBY_HANDS) /output/bin/sftp /grabby/sftp-8.8p1
 	$(GRABBY_HANDS) /output/bin/ssh-keygen /grabby/ssh-keygen-8.8p1
 
-parted-3.4: e2fsprogs-1.46.5 readline-8.1
+parted-3.4: e2fsprogs-1.47.0 readline-8.1
 	$(DOCKER_BUILD)
 	$(GRABBY_HANDS) /output/sbin/parted /grabby/parted-3.4
 
