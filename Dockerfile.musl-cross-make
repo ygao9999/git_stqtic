@@ -12,7 +12,7 @@ apt-get --option=Dpkg::Options::=--force-confold --option=Dpkg::Options::=--forc
 apt-get --option=Dpkg::Options::=--force-unsafe-io -y autoremove && \
 apt-get --option=Dpkg::Options::=--force-confold --option=Dpkg::Options::=--force-unsafe-io install -y --no-install-recommends build-essential ca-certificates wget unzip flex bison autoconf file python3 cmake gawk && \
 apt-get clean
-RUN download https://github.com/richfelker/musl-cross-make/archive/refs/tags/v0.9.9.zip /tmp/musl-cross-make.zip 6cbe2f6ce92e7f8f3973786aaf0b990d0db380c0e0fc419a7d516df5bb03c891 && \
+RUN download https://github.com/richfelker/musl-cross-make/archive/refs/tags/v0.9.10.zip /tmp/musl-cross-make.zip e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 && \
 mkdir /build && \
 cd /build && \
 unzip /tmp/musl-cross-make.zip && \
