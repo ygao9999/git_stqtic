@@ -4,8 +4,11 @@ ARG MUSL_TARGET
 
 WORKDIR /build
 RUN download https://github.com/strace/strace/releases/download/v6.1/strace-6.1.tar.xz source.tar.xz 2579e9cec37dbb786f6ea0bebd15f40dd561ef2bde2a2a2ecdce5963b01859fd && tar xf source.tar.xz
+COPY patches/strace-6.1 /build/patches
 RUN export PATH=/build/cross/bin:$PATH && \
-cd strace-* && \
+cd /build/cross/aarch64-linux-musl/include && \
+find /build/patches -type f -exec patch -p5 -i {} \; && \
+cd /build/strace-* && \
 CC="$MUSL_TARGET-gcc" \
 CFLAGS="-static -frandom-seed=pulse" \
 ./configure \
