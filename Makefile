@@ -22,7 +22,7 @@ ncurses-6.2: musl-cross-make
 readline-8.1: ncurses-6.2
 	$(DOCKER_BUILD)
 
-zlib-1.2.11: musl-cross-make
+zlib-1.3.1: musl-cross-make
 	$(DOCKER_BUILD)
 
 pcre-8.45: musl-cross-make
@@ -60,7 +60,7 @@ fuse-2.9.9: musl-cross-make
 	$(DOCKER_BUILD)
 
 # Don't use this EOL version of OpenSSL for anything important, it's just provided here in case it's needed to e.g. decrypt an old file
-openssl-0.9.8zh: zlib-1.2.11
+openssl-0.9.8zh: zlib-1.3.1
 	$(DOCKER_BUILD)
 	$(GRABBY_HANDS) /output/bin/openssl /grabby/$@
 
@@ -71,7 +71,7 @@ openssl-1.1.1k: musl-cross-make
 
 ## Tools
 
-dropbear-2020.81: zlib-1.2.11
+dropbear-2020.81: zlib-1.3.1
 	$(DOCKER_BUILD)
 	$(GRABBY_HANDS) /output/bin/dbclient /grabby/dbclient-2020.81
 	$(GRABBY_HANDS) /output/bin/dropbearconvert /grabby/dropbearconvert-2020.81
@@ -87,7 +87,7 @@ fuzzotron-09b7046: openssl-1.1.1k pcre-8.45
 	$(GRABBY_HANDS) /output/bin/replay /grabby/replay-09b7046
 	$(GRABBY_HANDS) /output/bin/fuzzotron /grabby/fuzzotron-09b7046
 
-nmap-7.90: libpcap-1.10.1 openssl-1.1.1k pcre-8.45 zlib-1.2.11 
+nmap-7.90: libpcap-1.10.1 openssl-1.1.1k pcre-8.45 zlib-1.3.1 
 	$(DOCKER_BUILD)
 	$(GRABBY_HANDS) /output/bin/nmap /grabby/$@
 
@@ -111,7 +111,7 @@ strace-6.1: musl-cross-make
 	$(DOCKER_BUILD)
 	$(GRABBY_HANDS) /output/bin/strace /grabby/$@
 
-openssh-8.8p1: openssl-1.1.1k zlib-1.2.11
+openssh-8.8p1: openssl-1.1.1k zlib-1.3.1
 	$(DOCKER_BUILD)
 	$(GRABBY_HANDS) /output/bin/ssh /grabby/ssh-8.8p1
 	$(GRABBY_HANDS) /output/bin/scp /grabby/scp-8.8p1
@@ -129,7 +129,7 @@ stunnel-5.64: openssl-1.1.1k
 ## Slightly crusty tools
 
 # By default just build the basic 'git' binary. If you want "everything" then set GIT_FULL as an environment variable. The 'git-versionnumber' binary will need to be renamed to just 'git' to work.
-git-2.33.0: curl-7.79.1 expat-2.4.1 openssl-1.1.1k zlib-1.2.11
+git-2.33.0: curl-7.79.1 expat-2.4.1 openssl-1.1.1k zlib-1.3.1
 	$(DOCKER_BUILD)
 	$(GRABBY_HANDS) /output/bin/git /grabby/$@
 ifdef GIT_FULL
