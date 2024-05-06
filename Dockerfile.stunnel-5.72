@@ -1,0 +1,26 @@
+ARG MUSL_TARGET=x86_64-linux-musl
+FROM openssl-1.1.1k-${MUSL_TARGET} AS openssl
+FROM musl-cross-make-${MUSL_TARGET}
+ARG MUSL_TARGET
+
+COPY --from=openssl /output /output
+
+WORKDIR /build
+RUN download https://www.usenix.org.uk/mirrors/stunnel/stunnel-5.72.tar.gz source.tar.gz 3d532941281ae353319735144e4adb9ae489a10b7e309c58a48157f08f42e949 && tar xf source.tar.gz
+RUN export PATH=/build/cross/bin:$PATH:/output/bin && \
+cd stunnel-* && \
+export CC="$MUSL_TARGET-gcc" && \
+export CFLAGS="-static -I/output/include -frandom-seed=pulse" && \
+export LDFLAGS="--static -L/output/lib $(if echo "$MUSL_TARGET" | grep i386 >/dev/null; then printf -- '-l:libatomic.a'; fi)" && \
+./configure \
+--disable-shared \
+--disable-fips \
+--with-threads=fork \
+--enable-static \
+--prefix=/output \
+--host=$($MUSL_TARGET-gcc -dumpmachine) && \
+make -j$(nproc) && \
+make install && \
+${MUSL_TARGET}-strip /output/bin/stunnel
+
+CMD bash
