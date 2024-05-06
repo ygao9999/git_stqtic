@@ -13,6 +13,8 @@ CC="$MUSL_TARGET-gcc" \
 --disable-stripping \
 --enable-static \
 --with-normal \ 
+--without-manpages \
+--without-tests \
 --disable-shared && \
 make -j$(nproc) && \
 make install
