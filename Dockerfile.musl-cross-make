@@ -20,6 +20,7 @@ cd musl-cross-make-* && \
 cp config.mak.dist config.mak && \
 echo "OUTPUT=/build/cross" >> config.mak && \
 echo "TARGET=$MUSL_TARGET" >> config.mak && \
+echo "DL_CMD=wget -c -q -O" >> config.mak && \
 make -j $(nproc) && \
 make install && \
 cd .. && \
