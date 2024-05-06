@@ -1,4 +1,5 @@
 ARG MUSL_TARGET=x86_64-linux-musl
+ARG GNU_SITE=https://ftpmirror.gnu.org/gnu
 FROM debian:bullseye
 ARG MUSL_TARGET
 
@@ -18,9 +19,10 @@ cd /build && \
 unzip /tmp/musl-cross-make.zip && \
 cd musl-cross-make-* && \
 cp config.mak.dist config.mak && \
+echo "DL_CMD=wget -c -q -O" >> config.mak && \
+echo "GNU_SITE=$GNU_SITE" >> config.mak && \
 echo "OUTPUT=/build/cross" >> config.mak && \
 echo "TARGET=$MUSL_TARGET" >> config.mak && \
-echo "DL_CMD=wget -c -q -O" >> config.mak && \
 make -j $(nproc) && \
 make install && \
 cd .. && \
