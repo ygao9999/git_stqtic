@@ -17,6 +17,8 @@ You can build individual binaries by specifying the recipe name as an argument t
 
 To validate that all your binaries came out right, run `make check`. This will list any binaries in the `output` directory which don't seem to have been statically linked.
 
+If the GNU mirror is being wonky you can add `GNU_SITE=https://mirror.fsmg.org.nz/gnu/` to the `make` invocation as well. You may want to specify a better local mirror.
+
 More tools and documentation will be added over time.
 
 ### Supported tools
@@ -26,7 +28,8 @@ These are the tools that build cleanly without too many caveats and are generall
 * `busybox-1.33.1`
 * `curl-7.79.1`
 * `dropbear-2020.81` (`dropbear`, `dropbearclient` and `dropbearkey`)
-* `fuzzotron-09b7046 (`fuzzotron` and `replay`)
+* `e2fsprogs-1.47.0`
+* `fuzzotron-9e86436` (`fuzzotron` and `replay`)
 * `loggedfs-0.9`
 * `ngrep-2a9603b`
 * `nmap-7.90` (some extra functionality is missing as it requires additional data files)
@@ -34,9 +37,9 @@ These are the tools that build cleanly without too many caveats and are generall
 * `openssl-0.9.8zh` (insecure, not for general use)
 * `openssl-1.1.1k`
 * `parted-3.4`
-* `socat-1.7.4.1`
+* `socat-1.8.8.8`
 * `strace-6.1`
-* `stunnel-5.64`
+* `stunnel-5.72`
 * `tcpdump-4.99.1`
 
 ### Experimental tools
@@ -50,7 +53,7 @@ These are tools which have significant caveats.
 
 These libraries are built automatically as required by the above tools.
 
-* `musl-cross-make-0.9.9`
+* `musl-cross-make-0.9.10` (including `musl-1.2.4`)
 * `expat-2.4.1`
 * `fuse-2.9.9`
 * `gettext-0.21` (not currently required for anything)
@@ -60,13 +63,13 @@ These libraries are built automatically as required by the above tools.
 * `libpcap-1.10.1`
 * `libssl-0.9.8zh` (as part of `openssl-0.9.8zh`, don't use this, just here for compatibility)
 * `libssl-1.1.1k` (as part of `openssl-1.1.1k`)
-* `libuuid-1.46.5` (as part of `e2fsprogs-1.46.5`)
+* `libuuid-1.46.5` (as part of `e2fsprogs-1.47.0`)
 * `libxml2-2.9.12`
 * `ncurses-6.2`
 * `pcre-8.45`
 * `protobuf-3.21.1` (C++ support only)
 * `readline-8.1`
-* `zlib-1.2.11`
+* `zlib-1.3.1`
 
 ## Rationale
 

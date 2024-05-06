@@ -5,7 +5,7 @@ UNAME_M := $(shell uname -m)
 DOCKER_BUILD = docker build --progress=plain --build-arg GNU_SITE=$(GNU_SITE) --build-arg MUSL_TARGET=$(MUSL_TARGET) -f Dockerfile.$@ -t $@-$(MUSL_TARGET) .
 GRABBY_HANDS = docker run --rm --mount type=bind,source=$(shell pwd)/output/$(MUSL_TARGET),target=/grabby $@-$(MUSL_TARGET) install -g $(shell id -g) -o $(shell id -u) 
 
-all: busybox-1.33.1 curl-7.79.1 dropbear-2020.81 loggedfs-0.9 ngrep-2a9603b nmap-7.90 openssl-1.1.1k parted-3.4 socat-1.8.0.0 tcpdump-4.99.1 strace-6.1 fuzzotron-9e86436
+all: busybox-1.33.1 curl-7.79.1 dropbear-2020.81 fuzzotron-9e86436 loggedfs-0.9 ngrep-2a9603b nmap-7.90 openssh-8.8p1 openssl-1.1.1k parted-3.4 socat-1.8.0.0 strace-6.1 stunnel-5.72 tcpdump-4.99.1
 
 check:
 	@echo "These binaries are not built properly:"
@@ -123,7 +123,7 @@ parted-3.4: e2fsprogs-1.47.0 readline-8.1
 	$(DOCKER_BUILD)
 	$(GRABBY_HANDS) /output/sbin/parted /grabby/parted-3.4
 
-stunnel-5.64: openssl-1.1.1k
+stunnel-5.72: openssl-1.1.1k
 	$(DOCKER_BUILD)
 	$(GRABBY_HANDS) /output/bin/stunnel /grabby/$@
 
