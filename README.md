@@ -37,7 +37,7 @@ These are the tools that build cleanly without too many caveats and are generall
 * `openssl-0.9.8zh` (insecure, not for general use)
 * `openssl-1.1.1k`
 * `parted-3.4`
-* `socat-1.8.8.8`
+* `socat-1.8.0.0`
 * `strace-6.1`
 * `stunnel-5.72`
 * `tcpdump-4.99.1`
@@ -63,7 +63,7 @@ These libraries are built automatically as required by the above tools.
 * `libpcap-1.10.1`
 * `libssl-0.9.8zh` (as part of `openssl-0.9.8zh`, don't use this, just here for compatibility)
 * `libssl-1.1.1k` (as part of `openssl-1.1.1k`)
-* `libuuid-1.46.5` (as part of `e2fsprogs-1.47.0`)
+* `libuuid-1.47.0` (as part of `e2fsprogs-1.47.0`)
 * `libxml2-2.9.12`
 * `ncurses-6.2`
 * `pcre-8.45`
