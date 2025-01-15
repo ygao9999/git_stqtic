@@ -92,8 +92,9 @@ And yet to be added:
 
 These people have contributed code and fixes:
 
-* Adam Baxter (@voltagex)
-* Michael Fincham (https://finch.am/)
+* Adam Baxter
+* Davide Guerri
+* Michael Fincham
 
 ## Feedback? Questions?
 
