@@ -31,6 +31,7 @@ These are the tools that build cleanly without too many caveats and are generall
 * `e2fsprogs-1.47.0`
 * `fuzzotron-9e86436` (`fuzzotron` and `replay`)
 * `loggedfs-0.9`
+* `microsocks-1.0.3`
 * `ngrep-2a9603b`
 * `nmap-7.90` (some extra functionality is missing as it requires additional data files)
 * `openssh-8.8p1` (`ssh`, `scp`, `sftp` and `ssh-keygen`)
