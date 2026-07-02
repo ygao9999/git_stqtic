@@ -23,10 +23,13 @@ cd /build && \
 unzip /tmp/musl-cross-make.zip && \
 cd musl-cross-make-* && \
 cp config.mak.dist config.mak && \
-echo "DL_CMD=wget -c -q -O" >> config.mak && \
-echo "GNU_SITE=$GNU_SITE" >> config.mak && \
+echo "DL_CMD=wget -c -O" >> config.mak && \
+echo "GNU_SITE=https://mirrors.kernel.org/gnu" >> config.mak && \
+echo "GMP_SITE=https://gmplib.org/download/gmp" >> config.mak && \
 echo "OUTPUT=/build/cross" >> config.mak && \
 echo "TARGET=$MUSL_TARGET" >> config.mak && \
+export CFLAGS="-fcommon" && \
+export CXXFLAGS="-fcommon" && \
 make -j $(nproc) && \
 make install && \
 cd .. && \
