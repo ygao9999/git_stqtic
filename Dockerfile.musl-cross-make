@@ -10,10 +10,11 @@ RUN mkdir /output && \
     apt-get install -y --no-install-recommends build-essential wget unzip flex bison autoconf file python3 cmake gawk texinfo bzip2 xz-utils patch ca-certificates tar && \
     apt-get clean
 
+# Toolchain tarball is pre-downloaded by CI and placed in context
+COPY toolchain.tgz /tmp/toolchain.tgz
 RUN mkdir -p /build && cd /build && \
-    wget --tries=3 --timeout=120 -O toolchain.tgz https://musl.cc/${MUSL_TARGET}-cross.tgz && \
-    tar xzf toolchain.tgz && \
+    tar xzf /tmp/toolchain.tgz && \
     mv ${MUSL_TARGET}-cross cross && \
-    rm toolchain.tgz
+    rm /tmp/toolchain.tgz
 
 CMD ["bash"]

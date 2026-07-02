@@ -6,8 +6,12 @@ on:
       - main
     paths:
       - 'Dockerfile.git-2.33.0'
+      - 'Dockerfile.musl-cross-make'
       - '.github/workflows/build-git.yml'
   workflow_dispatch:
+
+env:
+  MUSL_TARGET: aarch64-linux-musl
 
 jobs:
   build:
@@ -16,9 +20,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Cache musl cross toolchain
+        id: cache-toolchain
+        uses: actions/cache@v4
+        with:
+          path: toolchain.tgz
+          key: musl-cross-${{ env.MUSL_TARGET }}-v1
+
+      - name: Download musl cross toolchain
+        if: steps.cache-toolchain.outputs.cache-hit != 'true'
+        run: |
+          curl -fSL --retry 3 --retry-delay 10 \
+            -o toolchain.tgz \
+            "https://more.musl.cc/11/x86_64-linux-musl/${{ env.MUSL_TARGET }}-cross.tgz" || \
+          curl -fSL --retry 3 --retry-delay 10 \
+            -o toolchain.tgz \
+            "https://musl.cc/${{ env.MUSL_TARGET }}-cross.tgz"
+
       - name: Build git-2.33.0
         run: |
-          make git-2.33.0 GIT_FULL=yes MUSL_TARGET=aarch64-linux-musl
+          make git-2.33.0 GIT_FULL=yes MUSL_TARGET=${{ env.MUSL_TARGET }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
