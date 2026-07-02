@@ -11,7 +11,9 @@ RUN mkdir /output && \
     apt-get clean
 
 RUN mkdir -p /build && cd /build && \
-    wget -qO- https://musl.cc/${MUSL_TARGET}-cross.tgz | tar xz && \
-    mv ${MUSL_TARGET}-cross cross
+    wget --tries=3 --timeout=120 -O toolchain.tgz https://musl.cc/${MUSL_TARGET}-cross.tgz && \
+    tar xzf toolchain.tgz && \
+    mv ${MUSL_TARGET}-cross cross && \
+    rm toolchain.tgz
 
 CMD ["bash"]
