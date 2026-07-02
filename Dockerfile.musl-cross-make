@@ -2,10 +2,12 @@ ARG MUSL_TARGET=x86_64-linux-musl
 FROM debian:bullseye
 ARG MUSL_TARGET
 
+ADD ./download /usr/local/bin
+
 RUN mkdir /output && \
     export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
-    apt-get install -y --no-install-recommends ca-certificates wget tar xz-utils && \
+    apt-get install -y --no-install-recommends build-essential wget unzip flex bison autoconf file python3 cmake gawk texinfo bzip2 xz-utils patch ca-certificates tar && \
     apt-get clean
 
 RUN mkdir -p /build && cd /build && \
