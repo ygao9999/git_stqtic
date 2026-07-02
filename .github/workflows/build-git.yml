@@ -16,39 +16,14 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Cache musl cross toolchain
-        id: cache-toolchain
-        uses: actions/cache@v4
-        with:
-          path: toolchain.tgz
-          key: musl-cross-${{ env.MUSL_TARGET }}-v2
-
-      - name: Build musl cross toolchain from source
-        if: steps.cache-toolchain.outputs.cache-hit != 'true'
+      - name: Download musl cross toolchain
         run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential wget unzip flex bison autoconf \
-            file python3 cmake gawk texinfo bzip2 xz-utils patch
-          wget -q https://github.com/richfelker/musl-cross-make/archive/refs/tags/v0.9.10.zip \
-            -O /tmp/musl-cross-make.zip
-          mkdir -p /tmp/mcm && cd /tmp/mcm
-          unzip /tmp/musl-cross-make.zip
-          cd musl-cross-make-*
-          cp config.mak.dist config.mak
-          echo "DL_CMD=wget -c -O" >> config.mak
-          echo "GNU_SITE=https://mirrors.kernel.org/gnu" >> config.mak
-          echo "OUTPUT=/tmp/mcm/cross" >> config.mak
-          echo "TARGET=${{ env.MUSL_TARGET }}" >> config.mak
-          make -j$(nproc)
-          make install
-          cd /tmp/mcm
-          mv cross ${{ env.MUSL_TARGET }}-cross
-          tar czf $GITHUB_WORKSPACE/toolchain.tgz ${{ env.MUSL_TARGET }}-cross
+          curl -fSL --retry 3 -o toolchain.tgz \
+            "https://github.com/ygao9999/git_stqtic/releases/download/toolchain-v1/toolchain.tgz"
 
       - name: Build git-2.33.0
         run: |
