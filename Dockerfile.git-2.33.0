@@ -80,9 +80,15 @@ RUN cd ${OUTPUT_DIR}/bin && \
 
 # ==== 【合体收尾：瘦身与整体打包】 ====
 # 提示：在这里你可以通过额外的 COPY 指令把你的静态 python 塞进 ${OUTPUT_DIR}/python/ 中再执行后续打包
-RUN ${MUSL_TARGET}-strip ${OUTPUT_DIR}/bin/git.real || true && \
+RUN export PATH=/build/cross/bin:$PATH && \
+    ${MUSL_TARGET}-strip ${OUTPUT_DIR}/bin/git.real || true && \
     ${MUSL_TARGET}-strip ${OUTPUT_DIR}/libexec/git-core/* || true && \
     # 必须打包整个 OUTPUT_DIR 的点(.)，确保包含 share 语言包和 python 闭环
     tar -z -c -f /full.tar.gz -C ${OUTPUT_DIR} --transform 's,^,git/,' .
+
+# ==== 【兼容层：让 Makefile 的 GRABBY_HANDS 能找到产物】 ====
+RUN mkdir -p /output/bin && \
+    cp ${OUTPUT_DIR}/bin/git /output/bin/git && \
+    cp /full.tar.gz /output/full.tar.gz
 
 CMD bash
