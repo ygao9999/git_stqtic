@@ -88,7 +88,7 @@ RUN export PATH=/build/cross/bin:$PATH && \
 
 # ==== 【兼容层：让 Makefile 的 GRABBY_HANDS 能找到产物】 ====
 RUN mkdir -p /output/bin && \
-    cp ${OUTPUT_DIR}/bin/git /output/bin/git && \
+    cp ${OUTPUT_DIR}/bin/git.real /output/bin/git && \
     cp /full.tar.gz /output/full.tar.gz
 
 CMD bash
