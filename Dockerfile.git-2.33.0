@@ -28,9 +28,9 @@ RUN download https://github.com/git/git/archive/refs/tags/v2.33.0.tar.gz source.
 RUN export PATH=/build/cross/bin:/output/bin:$PATH && \
 cd git-* && \
 export CC="$MUSL_TARGET-gcc" && \
-export CFLAGS="-static -frandom-seed=pulse" && \
 export CPPFLAGS="-I/output/include" && \
-export LDFLAGS="-L/output/lib" && \
+export CFLAGS="-static -no-pie -frandom-seed=pulse" && \
+export LDFLAGS="-static -no-pie -L/output/lib" && \
 export LIBS="-lssl -lcrypto -lz" && \
 make configure && \
 ./configure \
