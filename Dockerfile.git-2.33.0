@@ -7,7 +7,7 @@ FROM musl-cross-make-$MUSL_TARGET
 ARG MUSL_TARGET
 
 # 统一使用绝对路径作为编译期的工具人前缀
-ENV OUTPUT_DIR=/opt/git_output
+ENV OUTPUT_DIR=/data/data/com.termux/files/home/git-bundle
 
 # 创建完整的输出目录骨架（包含你的静态 python 预留位置）
 RUN mkdir -p ${OUTPUT_DIR}/bin \
