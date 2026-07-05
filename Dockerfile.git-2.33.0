@@ -7,7 +7,7 @@ FROM musl-cross-make-$MUSL_TARGET
 ARG MUSL_TARGET
 
 # 统一使用绝对路径作为编译期的工具人前缀
-ENV OUTPUT_DIR=/data/data/com.termux/files/home/git-bundle
+ENV OUTPUT_DIR=/data/data/com.termux/files/home/.local/bin/.git_output
 
 # 创建完整的输出目录骨架（包含你的静态 python 预留位置）
 RUN mkdir -p ${OUTPUT_DIR}/bin \
@@ -51,29 +51,11 @@ rm -- ${BEFORE_INSTALL} || true
 
 # ==== 【核心战役：动态路径劫持与 Shebang 修复】 ====
 RUN cd ${OUTPUT_DIR}/bin && \
-    mv git git.real && \
-    \
-    # 1. 动态生成入口胶水脚本，抹平未来用户解压到 ~/.git_output 或任何路径的差异
-    echo '#!/bin/sh' > git && \
-    echo 'RUN_DIR="$(cd "$(dirname "$0")/.." && pwd)"' >> git && \
-    echo 'export GIT_EXEC_PATH="$RUN_DIR/libexec/git-core"' >> git && \
-    echo 'export GIT_TEMPLATE_DIR="$RUN_DIR/share/git-core/templates"' >> git && \
-    echo 'export GIT_TEXTDOMAINDIR="$RUN_DIR/share/locale"' >> git && \
-    echo 'export PATH="$RUN_DIR/bin:$RUN_DIR/python/bin:$RUN_DIR/libexec/git-core:$PATH"' >> git && \
-    echo 'if [ -d "$RUN_DIR/python/lib" ]; then' >> git && \
-    echo '    export PYTHONPATH="$RUN_DIR/python/lib:$PYTHONPATH"' >> git && \
-    echo 'fi' >> git && \
-    echo 'if [ -f "/etc/ssl/certs/ca-certificates.crt" ]; then' >> git && \
-    echo '    export GIT_SSL_CAINFO="/etc/ssl/certs/ca-certificates.crt"' >> git && \
-    echo 'elif [ -f "$RUN_DIR/share/git-core/cert.pem" ]; then' >> git && \
-    echo '    export GIT_SSL_CAINFO="$RUN_DIR/share/git-core/cert.pem"' >> git && \
-    echo 'fi' >> git && \
-    echo 'exec "$RUN_DIR/bin/git.real" "$@"' >> git && \
     chmod +x git && \
     \
     # 2. 封堵脚本扩展死穴：将所有内部 Python/Perl 脚本的硬编码头修正为动态 env 寻址
     find ${OUTPUT_DIR}/libexec/git-core/ -type f -exec sed -i 's|^#!/usr/bin/perl|#!/usr/bin/env perl|g' {} \; && \
-    find ${OUTPUT_DIR}/libexec/git-core/ -type f -exec sed -i 's|^#!/usr/bin/python|#!/usr/bin/env python|g' {} \; && \
+    find ${OUTPUT_DIR}/libexec/git-core/ -type f -exec sed -i 's|^#!/usr/bin/python|#!/usr/bin/env python3.14|g' {} \; && \
     \
     # 3. 提取容器内的证书做保底，确保无网或白牌系统下 HTTPS 闭环
     cp /etc/ssl/certs/ca-certificates.crt ${OUTPUT_DIR}/share/git-core/cert.pem || true
@@ -81,14 +63,14 @@ RUN cd ${OUTPUT_DIR}/bin && \
 # ==== 【合体收尾：瘦身与整体打包】 ====
 # 提示：在这里你可以通过额外的 COPY 指令把你的静态 python 塞进 ${OUTPUT_DIR}/python/ 中再执行后续打包
 RUN export PATH=/build/cross/bin:$PATH && \
-    ${MUSL_TARGET}-strip ${OUTPUT_DIR}/bin/git.real || true && \
+    ${MUSL_TARGET}-strip ${OUTPUT_DIR}/bin/git || true && \
     ${MUSL_TARGET}-strip ${OUTPUT_DIR}/libexec/git-core/* || true && \
     # 必须打包整个 OUTPUT_DIR 的点(.)，确保包含 share 语言包和 python 闭环
     tar -z -c -f /full.tar.gz -C ${OUTPUT_DIR} --transform 's,^,git/,' .
 
 # ==== 【兼容层：让 Makefile 的 GRABBY_HANDS 能找到产物】 ====
 RUN mkdir -p /output/bin && \
-    cp ${OUTPUT_DIR}/bin/git.real /output/bin/git && \
+    cp ${OUTPUT_DIR}/bin/git /output/bin/git && \
     cp /full.tar.gz /output/full.tar.gz
 
 CMD bash
