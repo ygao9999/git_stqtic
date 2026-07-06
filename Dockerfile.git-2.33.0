@@ -24,7 +24,7 @@ COPY --from=curl /output /output
 
 WORKDIR /build
 # RUN download https://github.com/git/git/archive/refs/tags/v2.33.0.tar.gz source.tar.gz ac8bb4bd4f689ddacd1f17c13e519c78d0f38ffc7c41dc24a4dbeb576bc88e91 && tar xf source.tar.gz
-RUN download https://github.com/git/git/archive/refs/tags/v2.51.0.tar.gz source.tar.gz && tar xf source.tar.gz
+RUN download https://github.com/git/git/archive/refs/tags/v2.51.0.tar.gz source.tar.gz SKIP && tar xf source.tar.gz
 
 RUN export PATH=/build/cross/bin:/output/bin:$PATH && \
 cd git-* && \
