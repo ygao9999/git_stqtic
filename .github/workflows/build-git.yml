@@ -27,7 +27,7 @@ jobs:
 
       - name: Build git-2.51.0
         run: |
-          make git-2.51.0 GIT_FULL=yes MUSL_TARGET=${{ env.MUSL_TARGET }}
+          make git-2.33.0 GIT_FULL=yes MUSL_TARGET=${{ env.MUSL_TARGET }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
