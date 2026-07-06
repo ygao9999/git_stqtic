@@ -9,6 +9,6 @@ tasks:
      sleep 3
      sudo chmod 666 /var/run/docker.sock
      cd static-binary-zoo || exit 1
-     make git-2.33.0 GIT_FULL=yes
+     make git-2.51.0 GIT_FULL=yes
 artifacts:
-  - static-binary-zoo/output/x86_64-linux-musl/git-2.33.0.tar.gz
+  - static-binary-zoo/output/x86_64-linux-musl/git-2.51.0.tar.gz
