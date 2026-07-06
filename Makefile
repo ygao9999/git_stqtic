@@ -134,7 +134,7 @@ microsocks-1.0.3: musl-cross-make
 ## Slightly crusty tools
 
 # By default just build the basic 'git' binary. If you want "everything" then set GIT_FULL as an environment variable. The 'git-versionnumber' binary will need to be renamed to just 'git' to work.
-git-2.33.0: curl-7.79.1 expat-2.4.1 openssl-1.1.1k zlib-1.3.1
+git-2.51.0: curl-7.79.1 expat-2.4.1 openssl-1.1.1k zlib-1.3.1
 	$(DOCKER_BUILD)
 	$(GRABBY_HANDS) /output/bin/git /grabby/$@
 ifdef GIT_FULL
