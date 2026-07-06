@@ -25,12 +25,12 @@ jobs:
           curl -fSL --retry 3 -o toolchain.tgz \
             "https://github.com/ygao9999/git_stqtic/releases/download/toolchain-v1/toolchain.tgz"
 
-      - name: Build git-2.33.0
+      - name: Build git-2.51.0
         run: |
-          make git-2.33.0 GIT_FULL=yes MUSL_TARGET=${{ env.MUSL_TARGET }}
+          make git-2.51.0 GIT_FULL=yes MUSL_TARGET=${{ env.MUSL_TARGET }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: git-2.33.0-static-aarch64
-          path: output/aarch64-linux-musl/git-2.33.0.tar.gz
+          name: git-2.51.0-static-aarch64
+          path: output/aarch64-linux-musl/git-2.51.0.tar.gz
